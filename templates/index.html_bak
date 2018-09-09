@@ -1,0 +1,83 @@
+<html>
+<head>
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="https://getbootstrap.com/docs/3.3/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="row"><div class="col-md-12"><div class="bgc-white bd bdrs-3 p-20 mB-20"><h3 class="c-grey-900 mB-20">ITRI Online Teaching Service, <font color="red">IP Address :<strong>{{IP}}</strong></font>
+</h3>
+</div>
+</div></div>
+<h4>
+Machine Learning 
+</h4>
+<div id="container" class="row">
+<div >
+  <select class="vedioList col-md-11 form-control" >
+  {% for video in videos %}
+  <!--option value="https://www.youtube.com/embed/nKW8Ndu7Mjw">The 7 Steps of Machine Learning</option>
+  <option value="https://www.youtube.com/embed/UzxYlbK2c7E">Vedio</option-->
+  <option value="{{ videos[video] }}">{{ video }}</option>
+  {% endfor %}
+</select>
+</div>
+<div class="row"><div class="col-md-12 video">
+  <iframe width="860" height="615"src="https://www.youtube.com/embed/nKW8Ndu7Mjw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div></div>
+<div class="row"><div class="col-md-8">
+<footer class="page-footer font-small blue pt-4 ">
+  <input class="stress pull-right" color="blue" type="button" value="Stress" />
+<div  class="counter pull-right" style="font-size:20"> <label id="minutes">00</label>:<label id="seconds">00</label></div>
+
+</footer>
+</div></div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"><\/script>')</script>
+    <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+
+<script>
+$(".counter").hide();
+$('.vedioList').click(function(){
+ var nowSelectVideo = $('.vedioList').find(":selected").val(); 
+ $(".video").html('<iframe width="860" height="615" class="video" src="'+nowSelectVideo+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'); 
+})
+
+$('.stress').click(function(){
+location.href=location.href + "stress";
+})
+
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+var pathname = window.location.pathname; 
+if(pathname =='/stress'){
+  $(".counter").show();
+  setInterval(setTime, 1000);
+}
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+</script>
+</body>
+
+
+</html>
+

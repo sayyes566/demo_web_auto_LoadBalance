@@ -1,0 +1,115 @@
+<html>
+<head>
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="https://getbootstrap.com/docs/3.3/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="row"><div class="col-md-1"></div>
+<div class="col-md-11"><div class="bgc-white bd bdrs-3 p-20 mB-20"><h3 class="c-grey-900 mB-20">ITRI Online Teaching Service, <font color="red">IP Address: <strong>{{IP}}</strong></font>
+</h3>
+</div>
+<h4>
+Machine Learning
+</h4>
+<div class="col-md-1"></div>
+  <div class="col-md-9">
+	  <select class="vedioList col-md-11 form-control" >
+	  {% for video in videos %}
+	  <!--option value="https://www.youtube.com/embed/nKW8Ndu7Mjw">The 7 Steps of Machine Learning</option>
+	  <option value="https://www.youtube.com/embed/UzxYlbK2c7E">Vedio</option-->
+	  <option value="{{ videos[video] }}">{{ video }}</option>
+	  {% endfor %}
+	 </select>
+	 <div class="video">
+	  <iframe width="100%" height="615"src="https://www.youtube.com/embed/nKW8Ndu7Mjw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	</div>
+</div>
+</div></div>
+
+<div id="container" class="row">
+
+<div class="row">&bsp;</div>
+<div class="row"><div class="col-md-4"></div><div class="col-md-8">
+<footer class="page-footer font-small blue pt-4 ">
+<div class="stressFeatue col-md-4">
+<label name="stressLabl">Stress: </label>
+<input type="number" class="minutes" value={{ stress_stop_mins }} /> 
+<b>minutes </b>
+  <input class="stressBtn  color="blue" type="button" value="Start" />
+</div>
+<div  class="counter col-md-4" style="font-size:20"> <label id="minutes">00</label>:<label id="seconds">00</label></div>
+<div color="red" class="msg"></div>
+</footer>
+</div></div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="static/js/bootstrap.min.js"><\/script>')</script>
+    <script src="static/js/bootstrap.min.js"></script>
+
+<script>
+$(".counter").hide();
+$('.vedioList').click(function(){
+ var nowSelectVideo = $('.vedioList').find(":selected").val();
+ $(".video").html('<iframe width="100%" height="615" class="video" src="'+nowSelectVideo+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>');
+})
+
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+var pathname = window.location.pathname;
+var _counter;
+var finish_stress = ()=> {
+$(".counter").hide();
+alert("CPU stress was done!");
+//$(".msg").html("<b>Finish</b>");
+}
+var stop_sec = 1;
+$('.stressBtn').click(function(){
+  var stop_mins = $('.minutes').val();
+  $(".counter").show();
+   stop_sec = stop_mins * 60;
+   console.log("stop time = "+ stop_sec)
+   _counter = setInterval(setTime, 1000);
+
+  $.get('/stress?mins='+ stop_mins, function(data){
+     console.log(data)
+  }).done(function(data){
+     console.log("done")
+  }).fail(function(err){
+     console.log(err)
+  })
+//location.href=location.href + "stress";
+})
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+  console.log(totalSeconds)
+  if(totalSeconds >= (stop_sec)){
+   clearInterval(_counter);
+   finish_stress();
+   //location.href = '/';
+  }
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+</script>
+</body>
+
+
+</html>
+
