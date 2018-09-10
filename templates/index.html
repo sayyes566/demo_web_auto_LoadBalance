@@ -33,7 +33,7 @@ Machine Learning
 
 <div id="container" class="row">
 
-<div class="row">&bsp;</div>
+<div class="row">&nbsp;</div>
 <div class="row"><div class="col-md-4"></div><div class="col-md-8">
 <footer class="page-footer font-small blue pt-4 ">
 <div class="stressFeatue col-md-4">
@@ -52,6 +52,7 @@ Machine Learning
     <script src="static/js/bootstrap.min.js"></script>
 
 <script>
+//20180910
 $(".counter").hide();
 $('.vedioList').click(function(){
  var nowSelectVideo = $('.vedioList').find(":selected").val();
@@ -65,7 +66,7 @@ var pathname = window.location.pathname;
 var _counter;
 var finish_stress = ()=> {
 $(".counter").hide();
-alert("CPU stress was done!");
+alert("Stress task was done!");
 //$(".msg").html("<b>Finish</b>");
 }
 var stop_sec = 1;
@@ -73,7 +74,6 @@ $('.stressBtn').click(function(){
   var stop_mins = $('.minutes').val();
   $(".counter").show();
    stop_sec = stop_mins * 60;
-   console.log("stop time = "+ stop_sec)
    _counter = setInterval(setTime, 1000);
 
   $.get('/stress?mins='+ stop_mins, function(data){
@@ -90,7 +90,6 @@ function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds % 60);
   minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-  console.log(totalSeconds)
   if(totalSeconds >= (stop_sec)){
    clearInterval(_counter);
    finish_stress();

@@ -120,7 +120,7 @@ def index():
 
 if __name__ == '__main__':
     config = ConfigParser.ConfigParser()
-    config.read('default.config')
+    config.read('default.conf')
     global db
     db['user'] = config.get('DB_MYSQL', 'user')
     db['password'] = config.get('DB_MYSQL', 'password')
